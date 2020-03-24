@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadLambtonUrl()
+        let history = myWebKitView.backForwardList
     }
     
     
@@ -32,13 +33,20 @@ class ViewController: UIViewController {
         myWebKitView.loadHTMLString(htmlString, baseURL: nil)
         
     }
-    
+        
+     @IBAction func btnHistory(_ sender: Any)
+    {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let historyTVC = sb.instantiateViewController(identifier: "historyTVC") as! HistoryTableViewController
+        historyTVC.historyList = self.history
+        navigationController?.pushViewController(historyTVC, animated: true)
+    }
     
 
     @IBAction func btnNavigation(_ sender: UIBarButtonItem)
     {
         switch sender.tag {
-        case 0://Home Button is pressed
+        case 0:
             myWebKitView.reloadFromOrigin()
         case 1://Prev Button is pressed
             if myWebKitView.canGoBack
